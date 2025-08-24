@@ -1,0 +1,5 @@
+cadastro-usuario\.env
+
+.env
+.env.*
+!.env.example

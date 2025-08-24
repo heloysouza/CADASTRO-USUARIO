@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0px 4px 20px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Bem-vindo ao sistema 🎉</h1>
+    <p>Você fez login com sucesso!</p>
+  </div>
+</body>
+<script>
+  async function carregarDashboard() {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      document.body.innerHTML = "<h2>Você não está logado!</h2>";
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/api/dashboard", {
+        method: "GET",
+        headers: { "Authorization": "Bearer " + token }
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        document.querySelector(".container").innerHTML = `
+          <h1>${result.message}</h1>
+          <button onclick="logout()">Sair</button>
+        `;
+      } else {
+        document.body.innerHTML = "<h2>Sessão expirada. Faça login novamente.</h2>";
+      }
+
+    } catch (error) {
+      document.body.innerHTML = "<h2>Erro ao conectar com servidor.</h2>";
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+  }
+
+  carregarDashboard();
+</script>
+
+</html>
