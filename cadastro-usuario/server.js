@@ -2,7 +2,7 @@ require('dotenv').config(); // carrega variáveis do .env
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const usuarioRoutes = require('./cadastro-usuario/routes/usuarioRoutes');
+const usuarioRoutes = require('./routes/usuarioRoutes');
 
 const app = express();
 
