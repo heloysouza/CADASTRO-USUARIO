@@ -11,17 +11,15 @@ app.use(cors());
 app.use(express.json());
 
 // Conexão com MongoDB
-const MONGO_URI = process.env.MONGO_URI; // SEM fallback local
-
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log("✅ MongoDB conectado!"))
-.catch((err) => {
-  console.error("❌ Erro ao conectar MongoDB:", err);
+const MONGO_URI = process.env.MONGO_URI;  // precisa existir!
+if (!MONGO_URI) {
+  console.error("❌ MONGO_URI não definido!");
   process.exit(1);
-});
+}
+
+mongoose.connect(MONGO_URI)
+  .then(() => console.log("✅ MongoDB conectado!"))
+  .catch(err => console.error("❌ Erro ao conectar MongoDB:", err));
 
 // Rotas
 app.use("/api", usuarioRoutes);
