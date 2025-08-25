@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 // Conexão com MongoDB
-const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/cadastroDB";
+const MONGO_URI = process.env.MONGO_URI; // SEM fallback local
 
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
